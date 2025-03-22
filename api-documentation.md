@@ -24,7 +24,7 @@ Esta API proporciona un conjunto completo de endpoints para gestionar informaci√
 ## Base URL
 
 ```
-https://api.example.com/v1
+[https://api-laravel-production-ed2b.up.railway.app/api/personas]
 ```
 
 ## Autenticaci√≥n
