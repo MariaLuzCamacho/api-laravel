@@ -8,9 +8,27 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Validator; // Paquete para Validar
 
+/**
+ * @OA\Info(
+ *     title="API de Personas",
+ *     version="1.0.0",
+ *     description="API para administrar información de personas"
+ * )
+ */
 class personaController extends Controller
 {
-    //
+    /**
+     * @OA\Get(
+     *     path="/api/personas",
+     *     summary="Mostrar todas las personas",
+     *     tags={"Personas"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de todas las personas",
+     *         @OA\JsonContent(type="array", @OA\Items(type="object"))
+     *     )
+     * )
+     */
     public function index(){
 
         $personas = Persona::all();
@@ -25,6 +43,31 @@ class personaController extends Controller
         return response()->json($personas, 200);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/personas",
+     *     summary="Crear una nueva persona",
+     *     tags={"Personas"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="nombre", type="string", example="Juan"),
+     *             @OA\Property(property="apellido", type="string", example="Pérez"),
+     *             @OA\Property(property="email", type="string", format="email", example="juan@example.com"),
+     *             @OA\Property(property="telefono", type="string", example="1234567890")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Persona creada exitosamente",
+     *         @OA\JsonContent(type="object")
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Error de validación"
+     *     )
+     * )
+     */
     public function guardar(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -70,6 +113,29 @@ class personaController extends Controller
         return response()->json($data, 201);
     }   
     
+    /**
+     * @OA\Get(
+     *     path="/api/personas/{id}",
+     *     summary="Consultar una persona por ID",
+     *     tags={"Personas"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de la persona",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Datos de la persona solicitada",
+     *         @OA\JsonContent(type="object")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Persona no encontrada"
+     *     )
+     * )
+     */
     public function consultarId($id)
     {
         $persona = Persona::find($id);
@@ -90,8 +156,28 @@ class personaController extends Controller
         return response()->json($data, 200);
     }
 
-    // Método para eliminar una persona
-
+    /**
+     * @OA\Delete(
+     *     path="/api/personas/{id}",
+     *     summary="Eliminar una persona",
+     *     tags={"Personas"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de la persona",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Persona eliminada exitosamente"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Persona no encontrada"
+     *     )
+     * )
+     */
     public function eliminar($id)
     {
         $persona = Persona::find($id);
@@ -114,8 +200,38 @@ class personaController extends Controller
         return response()->json($data, 200);
     }
 
-    // Actualizar con PUT
-
+    /**
+     * @OA\Put(
+     *     path="/api/personas/{id}",
+     *     summary="Actualizar todos los datos de una persona",
+     *     tags={"Personas"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de la persona",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="nombre", type="string", example="Juan"),
+     *             @OA\Property(property="apellido", type="string", example="Pérez"),
+     *             @OA\Property(property="email", type="string", format="email", example="juan@example.com"),
+     *             @OA\Property(property="telefono", type="string", example="1234567890")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Persona actualizada exitosamente",
+     *         @OA\JsonContent(type="object")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Persona no encontrada"
+     *     )
+     * )
+     */
     public function actualizar(Request $request, $id)
     {
         $persona = Persona::find($id);
@@ -161,7 +277,38 @@ class personaController extends Controller
         return response()->json($data, 200);
     }
         
-
+    /**
+     * @OA\Patch(
+     *     path="/api/personas/{id}",
+     *     summary="Actualizar parcialmente los datos de una persona",
+     *     tags={"Personas"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de la persona",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="nombre", type="string", example="Juan"),
+     *             @OA\Property(property="apellido", type="string", example="Pérez"),
+     *             @OA\Property(property="email", type="string", format="email", example="juan@example.com"),
+     *             @OA\Property(property="telefono", type="string", example="1234567890")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Persona actualizada parcialmente con éxito",
+     *         @OA\JsonContent(type="object")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Persona no encontrada"
+     *     )
+     * )
+     */
     public function actualizarParcial(Request $request, $id)
     {
         $persona = Persona::find($id);
