@@ -46,6 +46,11 @@ return [
                 'annotations' => [
                     base_path('app'),
                 ],
+
+                /*
+                * Edit to set the asset path
+                */
+                'assets' => '/docs/asset',
             ],
         ],
     ],
@@ -99,6 +104,11 @@ return [
              * `scanOptions.exclude` overwrites this
              */
             'excludes' => [],
+
+            /*
+            * Edit to set the asset path
+            */
+            'assets' => '/docs/asset',
         ],
 
         'scanOptions' => [
@@ -312,7 +322,7 @@ return [
          * Constants which can be used in annotations
          */
         'constants' => [
-            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com'),
+            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'https://api-laravel-production-ed2b.up.railway.app'),
         ],
     ],
 ];
