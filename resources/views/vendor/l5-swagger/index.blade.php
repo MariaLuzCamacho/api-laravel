@@ -3,12 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>{{ $documentationTitle }}</title>
-    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui.css">
-    <link rel="icon" type="image/png" href="{{ l5_swagger_asset($documentation, 'favicon-32x32.png') }}"
-        sizes="32x32" />
-    <link rel="icon" type="image/png" href="{{ l5_swagger_asset($documentation, 'favicon-16x16.png') }}"
-        sizes="16x16" />
+    <title>{{ config('l5-swagger.documentations.'.$documentation.'.api.title') }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ secure_asset('vendor/swagger-ui/swagger-ui.css') }}">
+    <link rel="icon" type="image/png" href="{{ secure_asset('vendor/swagger-ui/favicon-32x32.png') }}" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{{ secure_asset('vendor/swagger-ui/favicon-16x16.png') }}" sizes="16x16" />
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <style>
     html {
@@ -136,37 +134,18 @@
 <body @if(config('l5-swagger.defaults.ui.display.dark_mode')) id="dark-mode" @endif>
     <div id="swagger-ui"></div>
 
-    <script src="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui-bundle.js"></script>
-    <script src="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui-standalone-preset.js"></script>
+    <script src="{{ secure_asset('vendor/swagger-ui/swagger-ui-bundle.js') }}"></script>
+    <script src="{{ secure_asset('vendor/swagger-ui/swagger-ui-standalone-preset.js') }}"></script>
     <script>
     window.onload = function() {
-        const urls = [];
-
-        @foreach($urlsToDocs as $title => $url)
-        urls.push({
-            name: "{{ $title }}",
-            url: "{{ $url }}"
-        });
-        @endforeach
-
-        // Build a system
+        // Begin Swagger UI call region
         const ui = SwaggerUIBundle({
             dom_id: '#swagger-ui',
-            urls: urls,
-            "urls.primaryName": "{{ $documentationTitle }}",
-            operationsSorter: {
-                !!isset($operationsSorter) ? '"'.$operationsSorter.
-                '"' : 'null'!!
-            },
-            configUrl: {
-                !!isset($configUrl) ? '"'.$configUrl.
-                '"' : 'null'!!
-            },
-            validatorUrl: {
-                !!isset($validatorUrl) ? '"'.$validatorUrl.
-                '"' : 'null'!!
-            },
-            oauth2RedirectUrl: "{{ route('l5-swagger.'.$documentation.'.oauth2_callback', [], $useAbsolutePath) }}",
+            url: "{{ route('l5-swagger.'.$documentation.'.json') }}",
+            operationsSorter: "{{ config('l5-swagger.operations_sort') }}",
+            configUrl: "{{ config('l5-swagger.additional_config_url') }}",
+            validatorUrl: "{{ config('l5-swagger.validator_url') }}",
+            oauth2RedirectUrl: "{{ route('l5-swagger.'.$documentation.'.oauth2_callback', [], $secure) }}",
 
             requestInterceptor: function(request) {
                 request.headers['X-CSRF-TOKEN'] = '{{ csrf_token() }}';
@@ -183,16 +162,14 @@
             ],
 
             layout: "StandaloneLayout",
-            docExpansion: "{!! config('l5-swagger.defaults.ui.display.doc_expansion', 'none') !!}",
-            deepLinking: true,
+            docExpansion: "{{ config('l5-swagger.defaults.ui.display.doc_expansion', 'none') }}",
             filter: {
                 !!config('l5-swagger.defaults.ui.display.filter') ? 'true' : 'false'!!
             },
-            persistAuthorization: "{!! config('l5-swagger.defaults.ui.authorization.persist_authorization') ? 'true' : 'false' !!}",
+            persistAuthorization: "{{ config('l5-swagger.defaults.ui.authorization.persist_authorization') ? 'true' : 'false' }}"
+        });
 
-        })
-
-        window.ui = ui
+        window.ui = ui;
 
         @if(in_array('oauth2', array_column(config('l5-swagger.defaults.securityDefinitions.securitySchemes'),
             'type')))
