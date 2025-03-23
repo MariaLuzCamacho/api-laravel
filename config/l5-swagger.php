@@ -46,11 +46,6 @@ return [
                 'annotations' => [
                     base_path('app'),
                 ],
-
-                /*
-                * Edit to set the asset path
-                */
-                'assets' => '/docs/asset',
             ],
         ],
     ],
@@ -104,11 +99,6 @@ return [
              * `scanOptions.exclude` overwrites this
              */
             'excludes' => [],
-
-            /*
-            * Edit to set the asset path
-            */
-            'assets' => '/docs/asset',
         ],
 
         'scanOptions' => [
