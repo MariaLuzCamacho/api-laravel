@@ -70,7 +70,9 @@ return [
                 'docs' => [],
                 'oauth2_callback' => [],
             ],
-
+            'schemes' => [
+                'https'
+            ],
             /*
              * Route Group options
              */
