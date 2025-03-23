@@ -267,6 +267,7 @@
             }
         }
     },
+<<<<<<< HEAD
     "components": {
         "schemas": {
             "Persona": {
@@ -313,6 +314,8 @@
             }
         }
     },
+=======
+>>>>>>> aefd804aa88488346ee978ffb904a482cf18328b
     "tags": [
         {
             "name": "Personas",

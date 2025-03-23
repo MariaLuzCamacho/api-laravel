@@ -46,6 +46,14 @@ return [
                 'annotations' => [
                     base_path('app'),
                 ],
+<<<<<<< HEAD
+=======
+
+                /*
+                * Edit to set the asset path
+                */
+                'assets' => '/docs/asset',
+>>>>>>> aefd804aa88488346ee978ffb904a482cf18328b
             ],
         ],
     ],
@@ -99,6 +107,14 @@ return [
              * `scanOptions.exclude` overwrites this
              */
             'excludes' => [],
+<<<<<<< HEAD
+=======
+
+            /*
+            * Edit to set the asset path
+            */
+            'assets' => '/docs/asset',
+>>>>>>> aefd804aa88488346ee978ffb904a482cf18328b
         ],
 
         'scanOptions' => [
@@ -312,7 +328,14 @@ return [
          * Constants which can be used in annotations
          */
         'constants' => [
+<<<<<<< HEAD
             'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com'),
         ],
     ],
 ];
+=======
+            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'https://api-laravel-production-ed2b.up.railway.app'),
+        ],
+    ],
+];
+>>>>>>> aefd804aa88488346ee978ffb904a482cf18328b
