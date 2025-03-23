@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Validator; // Paquete para Validar
  *     version="1.0.0",
  *     description="API para administrar información de personas"
  * )
+ *  @OA\Server(
+ *     url="https://api-laravel-production-ed2b.up.railway.app/api",
+ *     description="API Server"
+ * )
  */
 class personaController extends Controller
 {
