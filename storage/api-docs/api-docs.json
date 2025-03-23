@@ -5,6 +5,12 @@
         "description": "API para administrar información de personas",
         "version": "1.0.0"
     },
+    "servers": [
+        {
+            "url": "https://api-laravel-production-ed2b.up.railway.app/api",
+            "description": "API Server"
+        }
+    ],
     "paths": {
         "/api/personas": {
             "get": {

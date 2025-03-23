@@ -32,16 +32,15 @@
     <script>
     window.onload = function() {
         const ui = SwaggerUIBundle({
-            url: "{{ url('docs') }}",
+            url: "{{ url($documentation->urls[0]->url) }}".replace('http://', 'https://'),
             dom_id: '#swagger-ui',
             deepLinking: true,
+            validatorUrl: null,
             presets: [
                 SwaggerUIBundle.presets.apis,
                 SwaggerUIStandalonePreset
             ],
-            plugins: [
-                SwaggerUIBundle.plugins.DownloadUrl
-            ],
+
             layout: "StandaloneLayout"
         });
         window.ui = ui;
